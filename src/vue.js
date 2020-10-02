@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
-new Vue({
+console.log(' vue.js')
+export default () => new Vue({
     template: '<div>vue test</div>'
 }).$mount('#app')

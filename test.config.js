@@ -6,11 +6,18 @@ const proConfig = require("./webpack.config.pro.js");
 const devConfig = require("./webpack.config.js");
 
 // module.exports = merge(baseConfig, devConfig);
-// console.log(process.env.Node_ENV);
-module.exports = env => {
-  if (env && env.production) {
-    return merge(baseConfig, proConfig);
+console.log(process.env.Node_ENV);
+// module.exports = env => {
+//   if (env && env.production) {
+//     return merge(baseConfig, proConfig);
+//   } else {
+//     return merge(baseConfig, devConfig);
+//   }
+// };
+module.exports = () => {
+  if(process.env.Node_ENV === "production") {
+    return merge(baseConfig, proConfig)
   } else {
-    return merge(baseConfig, devConfig);
+    return merge(baseConfig, devConfig)
   }
-};
+}

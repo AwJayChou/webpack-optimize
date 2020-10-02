@@ -8,7 +8,7 @@ const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 const AddAssetHtmlWebpackPlugin = require("add-asset-html-webpack-plugin");
 const devConfig = {
   output: {
-    path: path.resolve(__dirname, "./dist"),
+    path: path.resolve(__dirname, "./dev"),
     filename: "[name]_[hash:6].js"
     // publicPath: "http://cdn.com/assets/"
   },

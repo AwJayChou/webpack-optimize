@@ -5,9 +5,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurifyCSS = require("purifycss-webpack");
 const glob = require("glob-all");
+const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 const proConfig = {
   output: {
-    path: path.resolve(__dirname, "./build"),
+    path: path.resolve(__dirname, "./prod"),
     filename: "[name]_[hash:6].js"
     // publicPath: "http://cdn.com/assets/"
   },
@@ -42,9 +43,20 @@ const proConfig = {
           test: /react|react-dom/,
           name: "react",
           minChunks: 1
+        },
+        vue: {
+          test: /vue/,
+          name: 'vue',
+          minChunks: 1
         }
       }
     }
+  },
+  // externals : {
+  //   react: 'react'
+  // },
+  performance: {
+    hints: false
   },
   plugins: [
     //支持ejs模板引擎的写法
@@ -69,7 +81,8 @@ const proConfig = {
         path.resolve(__dirname, "./src/*.html"), // 请注意，我们同样需要对 html 文件进行 tree shaking
         path.resolve(__dirname, "./src/*.js")
       ])
-    })
+    }),
+    new HardSourceWebpackPlugin(),
   ]
 };
 

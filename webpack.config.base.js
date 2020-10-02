@@ -1,5 +1,6 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const LogWebpackPlugin = require("./plugin/test-plugin")
 const HappyPack = require("happypack");
 const happyThreadPool = HappyPack.ThreadPool({ size: 3 });
 module.exports = {
@@ -30,6 +31,17 @@ module.exports = {
         use: {
           loader: "happypack/loader?id=pic"
         }
+      },
+      {
+        test: /\.json$/,
+        use: [
+          {
+            loader: path.resolve(__dirname, './loader/test-loader.js'),
+            options: {
+              info: 'loader-test'
+            }
+          }
+        ]
       },
       {
         test: /\.jsx?$/,
@@ -67,7 +79,7 @@ module.exports = {
       ),
       'vue$': 'vue/dist/vue.esm.js' //内部为正则表达式  vue结尾的
     },
-    extensions: [".js"]
+    // extensions: [".js"]
   },
   plugins: [
     //支持ejs模板引擎的写法
@@ -101,7 +113,10 @@ module.exports = {
       ],
       threadPool: happyThreadPool
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new LogWebpackPlugin({
+      logName: 'runtime-log'
+    })
     //抽离css为独立文件输出
     // new MiniCssExtractPlugin({
     //   filename: "css/[name]_[hash:6].css"
